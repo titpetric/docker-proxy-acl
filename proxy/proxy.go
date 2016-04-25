@@ -25,6 +25,10 @@ func NewSocket(socket string) UpStream {
 
 func (r UpStream) Pass() (func(res http.ResponseWriter, req *http.Request)) {
 	return func(res http.ResponseWriter, req *http.Request) {
+		if req.Method != "GET" {
+			http.Error(res, "400 Bad request ; only GET allowed.", 400)
+			return;
+		}
 		param := "";
 		if len(req.URL.RawQuery) > 0 {
 			param = "?" + req.URL.RawQuery;
