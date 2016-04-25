@@ -29,10 +29,15 @@ func main() {
 	var (
 		allowed stringSlice;
 		allowedMap map[string]bool = make(map[string]bool);
-		filename = fs.String("filename", "/tmp/docker-safe.sock", "Location of socket file");
+		filename = fs.String("filename", "/tmp/docker-proxy-acl/docker.sock", "Location of socket file");
 	)
 	fs.Var(&allowed, "a", "Allowed location pattern prefix");
 	fs.Parse(os.Args[1:])
+
+	if len(allowed) < 1 {
+		fmt.Println("Need at least 1 argument for -a: [containers, networks, version, info, ping]");
+		os.Exit(0);
+	}
 
 	for _, s := range allowed {
 		allowedMap[s] = true;
@@ -66,7 +71,7 @@ func main() {
 	}
 
 	if allowedMap["ping"] {
-		fmt.Printf("Registering info handlers\n");
+		fmt.Printf("Registering ping handlers\n");
 		m.HandleFunc("/_ping", upstream.Pass());
 	}
 

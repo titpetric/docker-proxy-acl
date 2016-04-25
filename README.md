@@ -10,6 +10,7 @@ to do from inside the container, the requests can be limited to specific endpoin
 You can enable an endpoint with the `-a` argument. Currently supported endpoints are:
 
 * containers: opens access to `/containers/json` and `/containers/{name}/json`.
+* networks: opens access to `/networks` and `/networks/{name}`
 * info: opens access to `/info`
 * version: opens access to `/version`
 * ping: opens access to `/_ping`
@@ -28,12 +29,12 @@ To start a docker-proxy-acl with just the `containers` endpoints:
 ./run -a containers
 ~~~
 
-Using this application, a new socket file is created (`/tmp/docker-safe.sock`). Specifically
+Using this application, a new socket file is created (`/tmp/docker-proxy-acl/docker.sock`). Specifically
 for this example, only the `/containers/json` and `/containers/{name}/json` endpoints are allowed.
 This socket file can be passed to the `netdata` container, with an additional option like this:
 
 ~~~
--v /tmp/docker-safe.sock:/var/run/docker.sock
+-v /tmp/docker-proxy-acl/docker.sock:/var/run/docker.sock
 ~~~
 
 And now, netdata is free to query `/var/run/docker.sock` from within the container. If netdata is

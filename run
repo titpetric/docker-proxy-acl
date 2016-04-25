@@ -1,19 +1,21 @@
 #!/bin/bash
-function gvt_fetch {
-	CMD="go get"
-	BASE="src/"
-	if [ -d "vendor/" ]; then
-		CMD="gvt fetch"
-		BASE="vendor/"
+function go_docker {
+	ARGS=""
+	if [ -f "docker.args" ]; then
+		ARGS=$(cat docker.args | xargs echo -n)
 	fi
+	docker run $ARGS --rm=true -it -v `pwd`:/go -w /go golang go "$@"
+}
+
+function go_fetch {
+	BASE="src/"
 	if [ ! -d "$BASE$1" ]; then
 		echo "Fetching: $1"
-		$CMD $1
+		go_docker get $1
 	fi
 }
 
-gvt_fetch github.com/namsral/flag
-gvt_fetch github.com/gorilla/mux
+go_fetch github.com/namsral/flag
+go_fetch github.com/gorilla/mux
 
-go build docker-proxy-acl.go
-./docker-proxy-acl "$@"
+go_docker run docker-proxy-acl.go "$@"
