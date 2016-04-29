@@ -15,5 +15,6 @@ function gvt_fetch {
 gvt_fetch github.com/namsral/flag
 gvt_fetch github.com/gorilla/mux
 
+rm -f docker-proxy-acl
 go build docker-proxy-acl.go
 ./docker-proxy-acl "$@"

@@ -74,6 +74,9 @@ func main() {
 	http.Handle("/", m);
 
 	l, err := net.Listen("unix", *filename)
+	os.Chmod(*filename, 0666);
+	// Looking up group ids coming up for Go 1.7
+	// https://github.com/golang/go/issues/2617
 
 	fmt.Println("[docker-proxy-acl] Listening on " + *filename);
 
