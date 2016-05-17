@@ -4,7 +4,7 @@ function go_docker {
 	if [ -f "docker.args" ]; then
 		ARGS=$(cat docker.args | xargs echo -n)
 	fi
-	docker run $ARGS --rm=true -it -v `pwd`:/go/src/app -w /go/src/app golang go "$@"
+	docker run $ARGS -v `pwd`:/go/src/app -w /go/src/app golang go "$@"
 }
 
 function go_fetch {
