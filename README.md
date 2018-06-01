@@ -9,8 +9,13 @@ to do from inside the container, the requests can be limited to specific endpoin
 
 You can enable an endpoint with the `-a` argument. Currently supported endpoints are:
 
-* containers: opens access to `/containers/json` and `/containers/{name}/json`.
+* containers: opens access to `/containers/json` and `/containers/{name}/json`
+* images: opens access to `/images/json` , `/images/{name}/json` and `/images/{name}/history`
 * networks: opens access to `/networks` and `/networks/{name}`
+* volumes: opens access to `/volumes` and `/volumes/{name}`
+* services: opens access to `/services` and `/services/{id}`
+* tasks: opens access to `/tasks` and `/tasks/{name}`
+* events: opens access to `/events`
 * info: opens access to `/info`
 * version: opens access to `/version`
 * ping: opens access to `/_ping`
