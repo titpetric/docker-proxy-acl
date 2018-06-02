@@ -45,7 +45,7 @@ func main() {
 
 	var routers [2]*mux.Router;
 	routers[0] = mux.NewRouter();
-	routers[1] = routers[0].PathPrefix("/{version:^[v][0-9]+[.][0-9]+$}").Subrouter();
+	routers[1] = routers[0].PathPrefix("/{version:[v][0-9]+[.][0-9]+}").Subrouter();
 
 	upstream := proxy.NewSocket("/var/run/docker.sock");
 
@@ -127,7 +127,6 @@ func main() {
 			m.HandleFunc("/_ping", upstream.Pass());
 		}
 	}
-
 
 	http.Handle("/", routers[0]);
 
