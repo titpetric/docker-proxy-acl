@@ -4,6 +4,7 @@ import "fmt"
 import "net"
 import "net/http"
 import "io/ioutil"
+import "bufio"
 
 type UpStream struct {
 	Name string;
