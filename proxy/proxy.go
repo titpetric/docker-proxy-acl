@@ -50,3 +50,36 @@ func (r UpStream) Get(url string, res http.ResponseWriter) ([]byte,error) {
 	}
 	return ioutil.ReadAll(req.Body)
 }
+
+func (r UpStream) PassStream() (func(res http.ResponseWriter, req *http.Request)) {
+	return func(res http.ResponseWriter, req *http.Request) {
+		if req.Method != "GET" {
+			http.Error(res, "400 Bad request ; only GET allowed.", 400)
+			return;
+		}
+		param := "";
+		if len(req.URL.RawQuery) > 0 {
+			param = "?" + req.URL.RawQuery;
+		}
+
+		resp, _ := r.handle.Get("http://docker" + req.URL.Path + param);
+		defer resp.Body.Close();
+		contentType := resp.Header.Get("Content-type");
+
+		if contentType != "" {
+			res.Header().Set("Content-type", contentType);
+		}
+
+		reader := bufio.NewReader(resp.Body);
+
+		for {
+			line, err := reader.ReadBytes('\n');
+
+			if err != nil {
+				break;
+			}
+
+			fmt.Fprintf(res, "%s", line);
+		}
+	}
+}
