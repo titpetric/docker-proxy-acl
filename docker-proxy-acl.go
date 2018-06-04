@@ -103,7 +103,7 @@ func main() {
 	if allowedMap["events"] {
 		fmt.Printf("Registering events handlers\n");
 		for _, m := range routers {
-			m.HandleFunc("/events", upstream.Pass());
+			m.HandleFunc("/events", upstream.PassStream());
 		}
 	}
 
