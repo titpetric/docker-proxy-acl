@@ -11,7 +11,7 @@ import "net"
 import "net/http"
 import "github.com/gorilla/mux"
 
-import "./proxy"
+import "github.com/titpetric/docker-proxy-acl/proxy"
 
 type stringSlice []string;
 
