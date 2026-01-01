@@ -19,7 +19,7 @@ func (s *stringSlice) String() string {
 	return fmt.Sprintf("%d", *s)
 }
 func (s *stringSlice) Set(value string) error {
-	fmt.Sprintf("Allowing endpont: %s\n", value);
+	fmt.Sprintf("Allowing endpoint: %s\n", value);
 	*s = append(*s, value);
 	return nil;
 }
